@@ -1,0 +1,197 @@
+@import helper._
+
+@(invites: List[Invitee])(inviteForm: Form[Invitee])(edinburgh: Report)(australia: Report)
+@main("Admin") {
+<div class="container-fluid">
+	<div class="col-md-6 col-xs-12">
+		<h2>Totals (Edinburgh)</h2>
+		<ul>
+			<li>Total Adults: @edinburgh.adultCount</li>
+			<li>Total Kids: @edinburgh.underEighteenCount</li>
+			<li>Total Toddlers (no meal): @edinburgh.toddlerCount</li>
+			<li>Not Coming (incl. kids): @edinburgh.cannotCome</li>
+			<li>Waiting on a response: @edinburgh.noResponse</li>
+		</ul>
+	</div>
+	<div class="col-md-6 col-xs-12">
+		<h2>Totals (Australia)</h2>
+		<ul>
+			<li>Total Adults: @australia.adultCount</li>
+			<li>Total Kids: @australia.underEighteenCount</li>
+			<li>Total Toddlers (no meal): @australia.toddlerCount</li>
+			<li>Not Coming (incl. kids): @australia.cannotCome</li>
+			<li>Waiting on a response: @australia.noResponse</li>
+		</ul>
+	</div>
+	<div class="col-md-8 col-xs-12">
+		<button id="upload-button" type="button" data-toggle="modal" data-target="#uploadModal" class="btn btn-warning">Upload Backup</button>
+		<button id="upload-csv-button" type="button" data-toggle="modal" data-target="#uploadCsvModal" class="btn btn-primary">Upload Csv</button>	
+	</div>
+	@form(action = routes.Admin.backup, 'enctype -> "multipart/form-data") {
+		<div class="col-md-3 col-xs-8">
+			<input type="text" name="backupFilename" id="backup-filename-input" value="" class="form-control">
+		</div>
+		<div class="col-md-1 col-xs-4">
+			<button type="submit" class="btn btn-primary">
+				Backup
+			</button>
+		</div>
+	}
+	
+</div>
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th></th>
+			<th>irn</th>
+			<th>Name</th>
+			<th>Edinburgh</th>
+			<th>Australia</th>
+			<th>Kids</th>
+			<th>rsvp by</th>
+			<th>email</th>
+			<th>RSVP</th>
+			<th>Adult Count</th>
+			<th>Kids Count</th>
+			<th>Toddler Count</th>
+			<th>Food</th>
+			<th>Comments</th>
+			<th>Last Viewed</th>
+			<th>Sent?</th>
+		</tr>
+	</thead>
+	<tbody>
+		@for(invite <- invites) {
+			<tr>
+				<th>@form(routes.Admin.delete(invite.irn), 'class -> "topRight") {
+    				<button type="submit button" class="btn btn-danger">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					</button>
+				}</th>
+				<td><a href="http://www.andrewandsarah2016.com/invite/@invite.irn">@invite.irn</a></td>
+				@if(invite.rsvps.size > 0) {
+					<td>@invite.rsvps.last.name</td>
+				} else {
+					<td>@invite.displayName</td>
+				}
+				<td>@invite.edinburgh</td>
+				<td>@invite.australia</td>
+				<td>@invite.kids</td>
+				<td>@invite.rsvpByDate.format("dd-MM-yyyy")</td>
+				@if(invite.rsvps.size > 0) {
+					<td>@invite.rsvps.last.email</td>
+					<td>@invite.rsvps.last.rsvp</td>
+					<td>@invite.rsvps.last.guestNumber / @invite.numberInvited</td>
+					<td>@invite.rsvps.last.kids / @invite.numberKidsInvited</td>
+					<td>@invite.rsvps.last.toddlers</td>
+					<td>@invite.rsvps.last.foodRequirements</td>
+					<td>@invite.rsvps.last.comments</td>
+				} else {
+					<td>@invite.email</td>
+					<td>Null</td>
+					<td>- / @invite.numberInvited</td>
+					<td>- / @invite.numberKidsInvited</td>
+					<td></td>
+					<td></td>
+					<td></td>
+				}
+				<td>@if(invite.lastViewed != null) { @invite.lastViewed.format("dd-MM hh:mm") }</td>
+				<td>
+					@form(action = routes.Admin.toggleSent(invite.irn), 'enctype -> "multipart/form-data") {
+						
+						@if(invite.inviteSent) {
+						<button type="submit" class="btn btn-success">
+							<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+						</button>
+						} else {
+						<button type="submit" class="btn btn-danger">
+							<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+						</button>
+						}
+						
+					}
+				</td>
+			</tr>
+		}
+		@helper.form(action = routes.Admin.add()) {
+			<td>
+				<button type="submit button" class="btn btn-primary">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				</button>
+			</td>
+			<td>@helper.inputText(inviteForm("irn"))</td>
+			<td>@helper.inputText(inviteForm("displayName"))</td>
+			<td><input id="edinburgh-checkbox" name="edinburgh" @if(inviteForm("edinburgh").value == "true"){checked="checked"} type="checkbox" value="true"/></td>
+			<td><input id="australia-checkbox" name="australia" @if(inviteForm("australia").value == "true"){checked="checked"} type="checkbox" value="true"/></td>
+			<td><input id="kids-checkbox" name="kids" @if(inviteForm("kids").value == "true"){checked="checked"} type="checkbox" value="true"/></td>
+			<td>@helper.input(inviteForm("rsvpByDate")) { (id, name, value, args) =>
+			    <input type="date" name="@name" id="@id" value="@value" @toHtmlArgs(args)>
+			} </td>
+			<td>@helper.inputText(inviteForm("email"))</td>
+			<td></td>
+			<td>@helper.inputText(inviteForm("numberInvited"))</td>
+			<td>@helper.inputText(inviteForm("numberKidsInvited"))</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		}
+	</tbody>
+</table>
+
+
+<div class="modal fade" id="uploadCsvModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="rsvpCsvModalLabel">Upload CSV</h4>
+			</div>
+		@form(action = routes.Admin.uploadCsv, 'enctype -> "multipart/form-data") {
+      		<div class="modal-body row">
+      			<div class="col-xs-12 col-md-12">
+      				Upload csv, in column order name, adult count, children count, first event (true or false), second event, email. 
+      			</div>
+      			<div class="col-xs-12 col-md-12">
+      				<input type="date" name="rsvpByDate">
+      			</div>
+      			<div class="col-xs-12 col-md-12">
+					<input type="file" name="csvfile">
+      			</div>
+			</div>
+	      
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">Upload</button>
+			</div>
+		}
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="rsvpModalLabel">Upload Backup</h4>
+			</div>
+		@form(action = routes.Admin.upload, 'enctype -> "multipart/form-data") {
+      		<div class="modal-body row">
+      			<div class="col-xs-12 col-md-12">
+      				This will update changes in the database, without looking at last-updated times.  Data may be overwritten!
+      			</div>
+      			<div class="col-xs-12 col-md-12">
+					    <input type="file" name="backup">
+      			</div>
+			</div>
+	      
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-danger">Upload</button>
+			</div>
+		}
+		</div>
+	</div>
+</div>
+}

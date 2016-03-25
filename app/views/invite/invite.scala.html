@@ -1,0 +1,377 @@
+@import helper._
+
+@(invite: Invitee)(rsvpForm: Form[Rsvp])(successfulRsvp: Boolean)
+
+@main("Invite") {
+
+@if(rsvpForm.hasErrors) {
+	<script type="text/javascript">
+	$(window).load(function(){
+    	    $('#rsvpModal').modal('show');
+    	});
+	</script>
+}
+@if(successfulRsvp) {
+	<script type="text/javascript">
+		toastr.options = {
+			  "closeButton": true,
+			  "debug": false,
+			  "newestOnTop": false,
+			  "progressBar": false,
+			  "positionClass": "toast-top-center",
+			  "preventDuplicates": false,
+			  "onclick": null,
+			  "showDuration": "600",
+			  "hideDuration": "1000",
+			  "timeOut": "5000",
+			  "extendedTimeOut": "1000",
+			  "showEasing": "swing",
+			  "hideEasing": "linear",
+			  "showMethod": "fadeIn",
+			  "hideMethod": "fadeOut"
+			}
+		toastr["success"]("You have successfully RSVPed!  Thank you!");
+	
+	</script>	
+}
+<div class="masthead">
+	<nav class="navbar navbar-fixed-top" role="navigation">
+	  <div class="container">
+	    <!-- Brand and toggle get grouped for better mobile display -->
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">Wedding</a>
+	    </div>
+	
+	    <!-- Collect the nav links, forms, and other content for toggling -->
+	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	      <ul class="nav navbar-nav">
+	      	@if(invite.australia || invite.edinburgh) {
+	        	<li><a href="#invite">Invitation</a></li>
+	        }
+	        @if(invite.edinburgh) {
+	        	<li><a href="#edinburgh-location">Wedding</a></li>
+	        	<li><a href="#edinburgh-details">@if(invite.australia){Edinburgh }Info</a></li>
+	        }
+	        @if(invite.australia) {
+	        	<li><a href="#australia-location">Reception</a></li>
+	        	<li><a href="#australia-details">@if(invite.edinburgh){Australian }Info</a></li>
+	        	<li><a href="#accommodation">Accommodation</a></li>
+	        	<li><a href="#gifts">Gifts</a></li>
+	        }
+	        @if(invite.australia || invite.edinburgh) {
+	        	<li><a href="#rsvp">RSVP</a></li>
+	        }
+	        <li><a id="photoLink" href="#photos">Photos</a></li>
+	      </ul>
+	    </div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	<div class="container-fluid mcontainer">
+	</div>
+	<div class="container-fluid mcontainer">
+		<div class="row">
+		<div class="col-xs-2 col-md-4"></div>
+		<div class="col-xs-8 col-md-4"><img src="/assets/images/title_top.png"></img></div>
+		<div class="col-xs-2 col-md-4"></div>
+		</div>
+		<div class="row">
+		<div class="col-xs-3 col-md-4 line"><hr></div>
+		<div class="col-xs-6 col-md-4 logo">Your Wedding</div>
+		<div class="col-xs-3 col-md-4 line"><hr></div>
+		</div>
+		<div class="row">
+		<div class="col-xs-3 col-md-5"></div>
+		<div class="col-xs-6 col-md-2"><img src="/assets/images/title_bottom.png"></img></div>
+		<div class="col-xs-3 col-md-5"></div>
+		</div>
+	</div>
+	<div class="mcontainer"></div>
+	<div class="mcontainer"></div>
+	<div class="container-fluid mcontainer">
+		<div class="col-xs-4 col-md-5"></div>
+		<div class="col-xs-4 col-md-2 divider">
+			<div class="col-md-1"></div>
+			<div class="col-xs-12 col-md-10">
+				<!-- Middle Decoration? -->
+			</div>
+			<div class="col-md-1"></div>
+		</div>
+		<div class="col-xs-4 col-md-5"></div>
+	</div>
+	<div class="mcontainer"></div>
+	<div class="mcontainer"></div>
+	<div class="container-fluid mcontainer">
+		<div class="col-xs-12 col-md-12 logo-date">
+		@if(invite.edinburgh) {
+			Date 1
+		}
+		@if(invite.edinburgh && invite.australia) {
+			and
+		}
+		@if(invite.australia) {
+			Date 2
+		}
+		</div>
+	</div>
+	<div class="container-fluid mcontainer">
+		@if(invite.australia || invite.edinburgh) {
+			<div class="col-xs-12 col-md-12">
+				<button id="mastbutton" type="button" class="mbutton" data-toggle="modal" data-target="#rsvpModal">
+					RSVP
+				</button>
+			</div>
+		}
+	</div>
+	<div class="container-fluid mcontainer">
+		<div id="downarrow" class="col-xs-12 col-md-12">
+			<div class="glyphicon glyphicon-chevron-down bounce">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="startchange"></div>
+@if(invite.australia || invite.edinburgh) {
+<div class="container-fluid invite-container container-full">
+	<div id="invite" class="row-fluid invite-container">
+		<div class="col-md-2"></div>
+		<div class="col-md-8 invite-wording-1">
+			<div class="invite">
+				<div class="name">Joe and Jenny</div>
+					are delighted to invite<br>
+				<div class="guest">@invite.displayName</div>
+				to their 
+				@if(invite.edinburgh) {
+					wedding ceremony, to be held in 
+					Edinburgh<br>
+					<div class="invite-date">
+						Date 1<br>
+					</div>
+				}
+				@if(invite.edinburgh && invite.australia) {
+					and
+				}
+				@if(invite.australia) {
+					wedding reception, to be held at Lake Crackenback<br>
+					<div class="invite-date">
+						Date 2<br>
+					</div>
+				}
+				Kindly <a href="#rsvp">RSVP</a> by 
+						@invite.rsvpByDate.format("MMMMM dd").
+			</div>
+		</div>
+		<div class="md-col-2"></div>
+	</div>
+</div>
+<div class="divider-space-one divider-space">
+</div>
+}
+
+@if(invite.australia || invite.edinburgh) {
+	<div class="container">
+		<div class="col-md-12 nopadding">
+			<div id="rsvp" class="content-block rsvp-button-block">
+				<div class="dividor"></div>
+				<h1>RSVP</h1>
+				<p>
+					Please RSVP by @invite.rsvpByDate.format("MMMMM dd").<br><br>
+					<button id="rsvp-button" type="button" data-toggle="modal" data-target="#rsvpModal" class="btn btn-default">
+						RSVP<br>
+						<span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+					</button>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="photos" class="container">
+		<div class="content-block">
+			<div class="dividor"></div>
+			<h1>Photos</h1>
+			<div class="md-col-2"></div>
+			<div id="imageCarousel" class="carousel slide md-col-8" data-ride="carousel">
+			  <!-- Indicators -->
+				<ol class="carousel-indicators">
+					<li data-target="#imageCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#imageCarousel" data-slide-to="1"></li>
+					<li data-target="#imageCarousel" data-slide-to="2"></li>
+					<li data-target="#imageCarousel" data-slide-to="3"></li>
+					<li data-target="#imageCarousel" data-slide-to="4"></li>
+					<li data-target="#imageCarousel" data-slide-to="5"></li>
+					<li data-target="#imageCarousel" data-slide-to="6"></li>
+					<li data-target="#imageCarousel" data-slide-to="7"></li>
+					<li data-target="#imageCarousel" data-slide-to="8"></li>
+					<li data-target="#imageCarousel" data-slide-to="9"></li>
+					<li data-target="#imageCarousel" data-slide-to="10"></li>
+					<li data-target="#imageCarousel" data-slide-to="11"></li>
+				</ol>
+			
+			  <!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+				    <div id="carousel-image1" class="item active carousel-img">
+				    </div>
+				
+				    <div id="carousel-image2" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image3" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image4" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image5" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image6" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image7" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image8" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image9" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image10" class="item carousel-img">
+				    </div>
+				
+				    <div id="carousel-image11" class="item carousel-img">
+				    </div>
+				    
+				    <div id="carousel-image12" class="item carousel-img">
+				    </div>
+				    
+				</div>
+			
+				<!-- Left and right controls -->
+				<a class="left carousel-control" href="#imageCarousel" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#imageCarousel" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+			</div>
+			<div class="md-col-2"></div>
+		</div>
+	</div>
+}
+	<!-- Modal -->
+<div class="modal fade" id="rsvpModal" tabindex="-1" role="dialog" aria-labelledby="rsvpModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="rsvpModalLabel">RSVP</h4>
+			</div>
+			@helper.form(action = routes.Invitation.save(invite.irn)) {
+      		<div class="modal-body row">
+      			<div class="col-xs-12 col-md-12">
+      				@if(rsvpForm.hasErrors) {
+					    <p class="error">
+					        There has been an error with your RSVP.  Please try again.
+					    </p>
+					}
+      			</div>
+      			<div class="container col-xs-12 col-md-12 form-group">
+      			@helper.input(rsvpForm("name"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+				    <div class="row">
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Names</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="rsvp-input form-control"></div>
+				    </div>
+				}
+				
+				@if(invite.edinburgh) {
+					<div class="checkbox checkbox-success">
+						<input id="rsvpEdinburghAccept" name="rsvpEdinburgh" @if(rsvpForm("rsvpEdinburgh").value == "true"){checked="checked"} type="checkbox" value="true" />
+						<label for="rsvpEdinburghAccept">	
+							I/We would be delighted to attend @if(invite.australia){the Edinburgh wedding}
+						</label>
+					</div>
+					<div class="checkbox checkbox-danger">
+						<input id="rsvpEdinburghReject" name="rsvpEdinburgh" @if(rsvpForm("notRsvpEdinburgh").value == "true"){checked="checked"} type="checkbox" value="false"/>
+						<label for="rsvpEdinburghReject">
+							I/We are unable to attend @if(invite.australia){the Edinburgh wedding}
+						</label>
+					</div>
+					<script>
+						$('#rsvpEdinburghReject').click(function() { $('#rsvpEdinburghAccept').prop("checked", !$('#rsvpEdinburghReject').prop("checked"))});
+						$('#rsvpEdinburghAccept').click(function() { $('#rsvpEdinburghReject').prop("checked", !$('#rsvpEdinburghAccept').prop("checked"))});
+					</script>
+				}
+				@if(invite.australia) {
+					<div class="checkbox checkbox-success">
+						<input id="rsvpAustraliaAccept" name="rsvpAustralia" @if(rsvpForm("rsvpAustralia").value == "true"){checked="checked"} type="checkbox" value="true"/>
+						<label for="rsvpAustraliaAccept">
+							I/We would be delighted to attend @if(invite.edinburgh){the Australian reception}
+						</label>
+					</div>
+					<div class="checkbox checkbox-danger">
+					<input id="rsvpAustraliaReject" name="rsvpAustralia" @if(rsvpForm("notRsvpAustralia").value == "true"){checked="checked"} type="checkbox" value="false"/>
+					<label for="rsvpAustraliaReject">
+						I/We are unable to attend @if(invite.edinburgh){the Australian reception}
+					</label>
+					</div>
+					<script>
+						$('#rsvpAustraliaReject').click(function() { $('#rsvpAustraliaAccept').prop("checked", !$('#rsvpAustraliaReject').prop("checked"))});
+						$('#rsvpAustraliaAccept').click(function() { $('#rsvpAustraliaReject').prop("checked", !$('#rsvpAustraliaAccept').prop("checked"))});
+					</script>
+				} 
+				
+				@if(invite.kids) {
+					@helper.input(rsvpForm("guestNumber"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+				    	<div class="row">
+					    	<div class="col-xs-3 col-md-3"><label for="@id">Number of Adults</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="form-control"></div>
+					    </div>
+					}
+					@helper.input(rsvpForm("kids"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+				    	<div class="row">
+					    	<div class="col-xs-3 col-md-3"><label for="@id">Number of Children Under 18 Requiring a Meal</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="form-control"></div>
+					    </div>
+					} 
+					@helper.input(rsvpForm("toddlers"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+						<div class="row">
+					    	<div class="col-xs-3 col-md-3"><label for="@id">Number of Toddlers Not Requiring a Meal</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="form-control"></div>
+					    </div>
+					} 
+				} else {
+					@helper.input(rsvpForm("guestNumber"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+						<div class="row">
+					    	<div class="col-xs-3 col-md-3"><label for="@id">Number of Guests</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="rsvp-input form-control"></div>
+					    </div>
+					}
+				}
+				@helper.input(rsvpForm("email"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+			    	<div class="row">
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Email</label></div><div class="col-xs-9 col-md-9"><input type="text" name="@name" id="@id" value="@value" class="rsvp-input form-control"></div>
+				    </div>
+				}
+				
+				@helper.input(field = rsvpForm("foodRequirements"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+					<div class="row">
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Food Requirements</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control">@value</textarea></div>
+				    </div>
+				}
+				
+				@helper.input(field = rsvpForm("comments"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
+					<div class="row">
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Requests or Comments</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control">@value</textarea></div>
+				    </div>
+				}
+				
+				</div>
+				
+			</div>
+	      
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="submit" class="btn btn-primary">RSVP</button>
+			</div>
+		}
+		</div>
+	</div>
+</div>
+}
