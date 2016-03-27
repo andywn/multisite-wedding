@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -44,6 +45,7 @@ public class Admin extends Controller {
 	public Result main() {
 		Logger.info("Viewing admin page");
 		List<Invitee> all = Invitee.find.all();
+		Collections.sort(all);
 		Invitee invite = generateInvitee(this::generateIrn);
 		return ok(views.html.invite.admin.render(all, inviteForm.fill(invite), 
 				buildReport(all, Invitee::isEdinburgh, (i) -> i.getLastSubmittedRsvp().map((r) -> r.isRsvpEdinburgh()).orElse(false)),

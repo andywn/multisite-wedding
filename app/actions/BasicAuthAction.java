@@ -30,7 +30,7 @@ public class BasicAuthAction extends Action.Simple {
 	public Promise<Result> call(Context context) throws Throwable {
 		if (!context.request().secure()) {
 			// You're in the wrong place
-			return Promise.pure(redirect(routes.Wedding.defaultRoute("error")));
+			return Promise.pure(redirect(routes.Application.defaultRoute("error")));
 		}
 		
 		String authHeader = context.request().getHeader(AUTHORIZATION);

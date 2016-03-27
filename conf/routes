@@ -3,7 +3,7 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Invitation.defaultInvite()
+GET		/							controllers.Invitation.defaultInvite()
 # Invitations
 GET		/invite/:irn				controllers.Invitation.invite(irn: String)
 POST	/rsvp/:irn					controllers.Invitation.save(irn: String)
@@ -19,10 +19,13 @@ POST	/admin/togglesent			controllers.Admin.toggleSent(irn: String)
 POST	/admin/backup				controllers.Admin.backup()
 
 # Monitoring
-GET		/test						controllers.Wedding.test()
+GET		/test						controllers.Application.test()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
+#Javascript Ajax Routes
+GET		/jsroutes					controllers.Application.javascriptRoutes()
+
 # Default (404)
-GET 	/*path						controllers.Wedding.defaultRoute(path: String)
+GET 	/*path						controllers.Application.defaultRoute(path: String)

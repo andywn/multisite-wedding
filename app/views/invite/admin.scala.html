@@ -2,6 +2,9 @@
 
 @(invites: List[Invitee])(inviteForm: Form[Invitee])(edinburgh: Report)(australia: Report)
 @main("Admin") {
+<script type="text/javascript">
+	
+</script>
 <div class="container-fluid">
 	<div class="col-md-6 col-xs-12">
 		<h2>Totals (Edinburgh)</h2>
@@ -39,7 +42,8 @@
 	}
 	
 </div>
-<table class="table table-striped">
+<div class="admin-table">
+<table class="table">
 	<thead>
 		<tr>
 			<th></th>
@@ -54,15 +58,24 @@
 			<th>Adult Count</th>
 			<th>Kids Count</th>
 			<th>Toddler Count</th>
-			<th>Food</th>
-			<th>Comments</th>
 			<th>Last Viewed</th>
 			<th>Sent?</th>
 		</tr>
 	</thead>
 	<tbody>
 		@for(invite <- invites) {
-			<tr>
+			<tr style="border-top:2pt solid grey;" 
+				@if(invite.inviteSent) {
+					@if(invite.rsvps.size == 0) { 
+						class="danger"
+					} else { 
+						@if(invite.rsvps.size > 0 && invite.rsvps.last.rsvp != models.RsvpType.NEITHER) {
+							class="success"	
+						} else {
+							class="info"
+						}
+					}
+				}>
 				<th>@form(routes.Admin.delete(invite.irn), 'class -> "topRight") {
     				<button type="submit button" class="btn btn-danger">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
@@ -84,34 +97,39 @@
 					<td>@invite.rsvps.last.guestNumber / @invite.numberInvited</td>
 					<td>@invite.rsvps.last.kids / @invite.numberKidsInvited</td>
 					<td>@invite.rsvps.last.toddlers</td>
-					<td>@invite.rsvps.last.foodRequirements</td>
-					<td>@invite.rsvps.last.comments</td>
 				} else {
 					<td>@invite.email</td>
 					<td>Null</td>
 					<td>- / @invite.numberInvited</td>
 					<td>- / @invite.numberKidsInvited</td>
 					<td></td>
-					<td></td>
-					<td></td>
 				}
 				<td>@if(invite.lastViewed != null) { @invite.lastViewed.format("dd-MM hh:mm") }</td>
 				<td>
-					@form(action = routes.Admin.toggleSent(invite.irn), 'enctype -> "multipart/form-data") {
-						
-						@if(invite.inviteSent) {
-						<button type="submit" class="btn btn-success">
-							<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-						</button>
-						} else {
-						<button type="submit" class="btn btn-danger">
-							<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-						</button>
-						}
-						
+					@if(invite.inviteSent) {
+					<button class="btn btn-success btn-sent-toggle" value="@invite.irn">
+						<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+					</button>
+					} else {
+					<button class="btn btn-danger btn-sent-toggle" value="@invite.irn">
+						<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+					</button>
 					}
 				</td>
 			</tr>
+			@if(invite.rsvps.size > 0) {
+			<tr @if(invite.rsvps.size > 0 && invite.rsvps.last.rsvp != models.RsvpType.NEITHER) {
+					class="success"	
+				} else {
+					class="info"
+				}>
+				<td>
+				<td><strong>Food Requirements</strong></td>
+				<td colspan="5">@invite.rsvps.last.foodRequirements</td>
+				<td><strong>Comments</strong></td>
+				<td colspan="6">@invite.rsvps.last.comments</td>
+			</tr>
+			}
 		}
 		@helper.form(action = routes.Admin.add()) {
 			<td>
@@ -134,12 +152,10 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td></td>
-			<td></td>
 		}
 	</tbody>
 </table>
-
+</div>
 
 <div class="modal fade" id="uploadCsvModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
 	<div class="modal-dialog" role="document">

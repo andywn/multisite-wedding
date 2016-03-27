@@ -23,7 +23,7 @@ import play.Logger;
 import play.data.validation.Constraints.Required;
 
 @Entity
-public class Invitee extends Model {
+public class Invitee extends Model implements Comparable<Invitee> {
 	
 	@Id
 	public String irn;
@@ -93,6 +93,20 @@ public class Invitee extends Model {
 		if (rsvps.size() == 0)
 			return Optional.empty();
 		return Optional.ofNullable(rsvps.get(rsvps.size()-1));
+	}
+	
+	@Override
+	public int compareTo(Invitee o) {
+		if (o.australia && !this.australia) {
+			return 1;
+		} else if (!o.australia && this.australia) {
+			return -1;
+		} else if (o.edinburgh && !this.edinburgh) {
+			return 1;
+		} else if (!o.edinburgh && this.edinburgh) {
+			return -1;
+		}
+		return this.displayName.compareTo(o.displayName);
 	}
 	
 	public String getIrn() {
