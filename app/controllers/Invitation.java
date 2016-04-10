@@ -16,11 +16,16 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+/**
+ * Main Invite Page Controller
+ * 
+ * @author andrew
+ *
+ */
 public class Invitation extends Controller {
 	
 	private Form<Rsvp> rsvpForm = Form.form(Rsvp.class);
 	@Inject private Set<RsvpListener> listeners;
-	//@Inject private DropboxListener dropboxListener;
 	
 	public Invitation() {
 		

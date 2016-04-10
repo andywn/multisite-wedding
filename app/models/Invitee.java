@@ -1,5 +1,11 @@
 package models;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -107,6 +113,15 @@ public class Invitee extends Model implements Comparable<Invitee> {
 			return -1;
 		}
 		return this.displayName.compareTo(o.displayName);
+	}
+	
+	@Transient
+	@JsonIgnore
+	public String getLastViewedString() {
+		Duration since = Duration.between(LocalDateTime.ofInstant(Instant.ofEpochMilli(getLastViewed().getTime()), ZoneId.systemDefault()), LocalDateTime.now());
+		return (since.getSeconds() < 3600) ? (since.getSeconds() / 60) + " minutes ago" : 
+			(since.getSeconds() > (86400*2)) ? since.getSeconds() / 86400 + " days ago" :
+				(since.getSeconds() / 86400) + " hours ago";
 	}
 	
 	public String getIrn() {

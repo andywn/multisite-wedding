@@ -13,6 +13,14 @@ import com.typesafe.config.ConfigFactory;
 import models.Rsvp;
 import play.Logger;
 
+/**
+ * Gmail listener.  Sends an email on RSVP.
+ * 
+ * Requires configuration (See wedding.conf file)
+ * 
+ * @author andrew
+ *
+ */
 @Singleton
 public class EmailListener implements RsvpListener {
 	

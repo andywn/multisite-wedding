@@ -69,24 +69,18 @@
 	<div class="container-fluid mcontainer">
 	</div>
 	<div class="container-fluid mcontainer">
+	</div>
+	<div class="container-fluid mcontainer">
 		<div class="row">
-		<div class="col-xs-2 col-md-4"></div>
-		<div class="col-xs-8 col-md-4"><img src="/assets/images/title_top.png"></img></div>
-		<div class="col-xs-2 col-md-4"></div>
 		</div>
 		<div class="row">
 		<div class="col-xs-3 col-md-4 line"><hr></div>
-		<div class="col-xs-6 col-md-4 logo">Your Wedding</div>
+		<div class="col-xs-6 col-md-4 logo">Alex & Elliot's Wedding</div>
 		<div class="col-xs-3 col-md-4 line"><hr></div>
 		</div>
 		<div class="row">
-		<div class="col-xs-3 col-md-5"></div>
-		<div class="col-xs-6 col-md-2"><img src="/assets/images/title_bottom.png"></img></div>
-		<div class="col-xs-3 col-md-5"></div>
 		</div>
 	</div>
-	<div class="mcontainer"></div>
-	<div class="mcontainer"></div>
 	<div class="container-fluid mcontainer">
 		<div class="col-xs-4 col-md-5"></div>
 		<div class="col-xs-4 col-md-2 divider">
@@ -137,13 +131,13 @@
 		<div class="col-md-2"></div>
 		<div class="col-md-8 invite-wording-1">
 			<div class="invite">
-				<div class="name">Joe and Jenny</div>
+				<div class="name">Alex and Elliot</div>
 					are delighted to invite<br>
 				<div class="guest">@invite.displayName</div>
 				to their 
 				@if(invite.edinburgh) {
 					wedding ceremony, to be held in 
-					Edinburgh<br>
+					Site1<br>
 					<div class="invite-date">
 						Date 1<br>
 					</div>
@@ -152,7 +146,7 @@
 					and
 				}
 				@if(invite.australia) {
-					wedding reception, to be held at Lake Crackenback<br>
+					wedding reception, to be held at Site2<br>
 					<div class="invite-date">
 						Date 2<br>
 					</div>
@@ -164,8 +158,33 @@
 		<div class="md-col-2"></div>
 	</div>
 </div>
+}
+
 <div class="divider-space-one divider-space">
 </div>
+@if(invite.australia) {
+	<div class="container container-shrinkable">
+		<div class="col-md-12 nopadding">
+			<div id="wedding-info-1" class="content-block">
+				<h1>Wedding Information</h1>
+	                <p>
+						We're having our first wedding at....	                	
+	            	</p>
+	        </div>
+		</div>
+	</div>
+}
+@if(invite.edinburgh) {
+	<div class="container container-shrinkable">
+		<div class="col-md-12 nopadding">
+			<div id="wedding-info-2" class="content-block">
+				<h1>Wedding Information</h1>
+	                <p>
+						We're having our second wedding at....	                	
+	            	</p>
+	        </div>
+		</div>
+	</div>
 }
 
 @if(invite.australia || invite.edinburgh) {
@@ -184,82 +203,8 @@
 			</div>
 		</div>
 	</div>
-	<div id="photos" class="container">
-		<div class="content-block">
-			<div class="dividor"></div>
-			<h1>Photos</h1>
-			<div class="md-col-2"></div>
-			<div id="imageCarousel" class="carousel slide md-col-8" data-ride="carousel">
-			  <!-- Indicators -->
-				<ol class="carousel-indicators">
-					<li data-target="#imageCarousel" data-slide-to="0" class="active"></li>
-					<li data-target="#imageCarousel" data-slide-to="1"></li>
-					<li data-target="#imageCarousel" data-slide-to="2"></li>
-					<li data-target="#imageCarousel" data-slide-to="3"></li>
-					<li data-target="#imageCarousel" data-slide-to="4"></li>
-					<li data-target="#imageCarousel" data-slide-to="5"></li>
-					<li data-target="#imageCarousel" data-slide-to="6"></li>
-					<li data-target="#imageCarousel" data-slide-to="7"></li>
-					<li data-target="#imageCarousel" data-slide-to="8"></li>
-					<li data-target="#imageCarousel" data-slide-to="9"></li>
-					<li data-target="#imageCarousel" data-slide-to="10"></li>
-					<li data-target="#imageCarousel" data-slide-to="11"></li>
-				</ol>
-			
-			  <!-- Wrapper for slides -->
-				<div class="carousel-inner" role="listbox">
-				    <div id="carousel-image1" class="item active carousel-img">
-				    </div>
-				
-				    <div id="carousel-image2" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image3" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image4" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image5" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image6" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image7" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image8" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image9" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image10" class="item carousel-img">
-				    </div>
-				
-				    <div id="carousel-image11" class="item carousel-img">
-				    </div>
-				    
-				    <div id="carousel-image12" class="item carousel-img">
-				    </div>
-				    
-				</div>
-			
-				<!-- Left and right controls -->
-				<a class="left carousel-control" href="#imageCarousel" role="button" data-slide="prev">
-					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-					<span class="sr-only">Previous</span>
-				</a>
-				<a class="right carousel-control" href="#imageCarousel" role="button" data-slide="next">
-					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-					<span class="sr-only">Next</span>
-				</a>
-			</div>
-			<div class="md-col-2"></div>
-		</div>
-	</div>
 }
+
 	<!-- Modal -->
 <div class="modal fade" id="rsvpModal" tabindex="-1" role="dialog" aria-labelledby="rsvpModalLabel">
 	<div class="modal-dialog" role="document">

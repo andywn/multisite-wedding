@@ -31,6 +31,12 @@ import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+/**
+ * Administration Page Controller
+ * 
+ * @author andrew
+ *
+ */
 public class Admin extends Controller {
 	
 	private Form<Invitee> inviteForm = Form.form(Invitee.class);

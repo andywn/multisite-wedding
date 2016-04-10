@@ -104,7 +104,8 @@
 					<td>- / @invite.numberKidsInvited</td>
 					<td></td>
 				}
-				<td>@if(invite.lastViewed != null) { @invite.lastViewed.format("dd-MM hh:mm") }</td>
+				
+				<td>@if(invite.lastViewed != null) { @invite.getLastViewedString() }</td>
 				<td>
 					@if(invite.inviteSent) {
 					<button class="btn btn-success btn-sent-toggle" value="@invite.irn">

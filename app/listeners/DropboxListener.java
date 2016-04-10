@@ -20,6 +20,14 @@ import models.Invitee;
 import models.Rsvp;
 import play.Logger;
 
+/**
+ * Dropbox uploader listener.
+ * 
+ * Requires configuration (see wedding.conf file)
+ * 
+ * @author andrew
+ *
+ */
 @Singleton
 public class DropboxListener implements RsvpListener {
 	
@@ -62,8 +70,6 @@ public class DropboxListener implements RsvpListener {
 		CompletableFuture<Void> future = new CompletableFuture<Void>();
 		new Thread(() -> {
 			try {
-		        
-		
 		        FullAccount account = client.users().getCurrentAccount();
 		        Logger.info("Uploading to dropbox account " + account.getName().getDisplayName());
 		        
