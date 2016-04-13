@@ -118,8 +118,8 @@ public class Invitee extends Model implements Comparable<Invitee> {
 	public String getLastViewedString() {
 		Duration since = Duration.between(LocalDateTime.ofInstant(Instant.ofEpochMilli(getLastViewed().getTime()), ZoneId.systemDefault()), LocalDateTime.now());
 		return (since.getSeconds() < 3600) ? (since.getSeconds() / 60) + " minutes ago" : 
-			(since.getSeconds() > (86400*2)) ? Math.floor(since.getSeconds() / 86400D) + " days ago" :
-				(Math.round(since.getSeconds() / 3600D)) + " hours ago";
+			(since.getSeconds() > (86400*2)) ? (long)(Math.floor(since.getSeconds() / 86400D)) + " days ago" :
+				(long)(Math.round(since.getSeconds() / 3600D)) + " hours ago";
 	}
 	
 	public String getIrn() {
