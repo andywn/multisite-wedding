@@ -107,21 +107,21 @@
 		}
 		</div>
 	</div>
-	<div class="container-fluid mcontainer">
-		@if(invite.australia || invite.edinburgh) {
+	@if(invite.australia || invite.edinburgh) {
+		<div class="container-fluid mcontainer">
 			<div class="col-xs-12 col-md-12">
 				<button id="mastbutton" type="button" class="mbutton" data-toggle="modal" data-target="#rsvpModal">
 					RSVP
 				</button>
 			</div>
-		}
-	</div>
-	<div class="container-fluid mcontainer">
-		<div id="downarrow" class="col-xs-12 col-md-12">
-			<div class="glyphicon glyphicon-chevron-down bounce">
+		</div>
+		<div class="container-fluid mcontainer">
+			<div id="downarrow" class="col-xs-12 col-md-12">
+				<div class="glyphicon glyphicon-chevron-down bounce">
+				</div>
 			</div>
 		</div>
-	</div>
+	}
 </div>
 
 <div id="startchange"></div>
@@ -159,9 +159,10 @@
 	</div>
 </div>
 }
-
-<div class="divider-space-one divider-space">
-</div>
+@if(invite.australia || invite.edinburgh) {
+	<div class="divider-space-one divider-space">
+	</div>
+}
 @if(invite.australia) {
 	<div class="container container-shrinkable">
 		<div class="col-md-12 nopadding">

@@ -3,7 +3,6 @@ package actions;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
-import controllers.Invitation;
 import controllers.routes;
 import play.libs.F.Promise;
 import play.mvc.Action;

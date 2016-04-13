@@ -6,8 +6,6 @@ import java.util.Set;
 
 import com.google.inject.Inject;
 
-import listeners.DropboxListener;
-import listeners.EmailListener;
 import listeners.RsvpListener;
 import models.Invitee;
 import models.Rsvp;
