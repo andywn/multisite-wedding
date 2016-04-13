@@ -298,13 +298,13 @@
 				
 				@helper.input(field = rsvpForm("foodRequirements"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
 					<div class="row">
-				    	<div class="col-xs-3 col-md-3"><label for="@id">Food Requirements</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control" maxlength="255">@value</textarea></div>
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Food Requirements</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control" maxlength="254">@value</textarea></div>
 				    </div>
 				}
 				
 				@helper.input(field = rsvpForm("comments"), '_showConstraints -> false, '_label -> null, '_showErrors -> true) { (id, name, value, args) =>
 					<div class="row">
-				    	<div class="col-xs-3 col-md-3"><label for="@id">Requests or Comments</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control" maxlength="255">@value</textarea></div>
+				    	<div class="col-xs-3 col-md-3"><label for="@id">Requests or Comments</label></div><div class="col-xs-9 col-md-9"><textarea rows="3" cols="90" name="@name" id="@id" class="rsvp-input form-control" maxlength="254">@value</textarea></div>
 				    </div>
 				}
 				
