@@ -11,6 +11,7 @@ public class Report extends Model {
 	public int adultCount;
 	public int cannotCome;
 	public int noResponse;
+	public int inviteNotYetSent;
 
 	
 	public Report() {
@@ -28,7 +29,10 @@ public class Report extends Model {
 				cannotCome = i.numberInvited + i.numberKidsInvited;
 			}
 		} else {
-			noResponse = i.numberKidsInvited + i.numberInvited;
+			if (i.inviteSent)
+				noResponse = i.numberKidsInvited + i.numberInvited;
+			else
+				inviteNotYetSent = i.numberKidsInvited + i.numberInvited;
 		}
 	}
 	
@@ -38,6 +42,7 @@ public class Report extends Model {
 		a.adultCount += b.adultCount;
 		a.noResponse += b.noResponse;
 		a.cannotCome += b.cannotCome;
+		a.inviteNotYetSent += b.inviteNotYetSent;
 		return a;
 	}
 	

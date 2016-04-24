@@ -3,7 +3,6 @@
 @(invites: List[Invitee])(inviteForm: Form[Invitee])(edinburgh: Report)(australia: Report)
 @main("Admin") {
 <script type="text/javascript">
-	
 </script>
 <div class="container-fluid">
 	<div class="col-md-6 col-xs-12">
@@ -13,7 +12,8 @@
 			<li>Total Kids: @edinburgh.underEighteenCount</li>
 			<li>Total Toddlers (no meal): @edinburgh.toddlerCount</li>
 			<li>Not Coming (incl. kids): @edinburgh.cannotCome</li>
-			<li>Waiting on a response: @edinburgh.noResponse</li>
+			<li>Waiting on a response (incl. kids): @edinburgh.noResponse</li>
+			<li>Invite Not Yet Sent (incl. kids): @edinburgh.inviteNotYetSent</li>
 		</ul>
 	</div>
 	<div class="col-md-6 col-xs-12">
@@ -24,6 +24,7 @@
 			<li>Total Toddlers (no meal): @australia.toddlerCount</li>
 			<li>Not Coming (incl. kids): @australia.cannotCome</li>
 			<li>Waiting on a response: @australia.noResponse</li>
+			<li>Invite Not Yet Sent (incl. kids): @australia.inviteNotYetSent</li>
 		</ul>
 	</div>
 	<div class="col-md-8 col-xs-12">
@@ -81,7 +82,7 @@
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button>
 				}</th>
-				<td><a href="http://localhost:9000/invite/@invite.irn">@invite.irn</a></td>
+				<td><a href="http://www.andrewandsarah2016.com/invite/@invite.irn">@invite.irn</a></td>
 				@if(invite.rsvps.size > 0) {
 					<td>@invite.rsvps.last.name</td>
 				} else {
@@ -144,7 +145,7 @@
 			<td><input id="australia-checkbox" name="australia" @if(inviteForm("australia").value == "true"){checked="checked"} type="checkbox" value="true"/></td>
 			<td><input id="kids-checkbox" name="kids" @if(inviteForm("kids").value == "true"){checked="checked"} type="checkbox" value="true"/></td>
 			<td>@helper.input(inviteForm("rsvpByDate")) { (id, name, value, args) =>
-			    <input type="date" name="@name" id="@id" value="@value" @toHtmlArgs(args)>
+			    <input id="inline-rsvp-date" type="date" name="@name" id="@id" value="@value" @toHtmlArgs(args)>
 			} </td>
 			<td>@helper.inputText(inviteForm("email"))</td>
 			<td></td>
@@ -171,7 +172,8 @@
       				Upload csv, in column order name, adult count, children count, first event (true or false), second event, email. 
       			</div>
       			<div class="col-xs-12 col-md-12">
-      				<input type="date" name="rsvpByDate">
+      				<label for="csv-rsvp-date">RSVP By Date</label>
+      				<input id="csv-rsvp-date" type="date" name="rsvpByDate">
       			</div>
       			<div class="col-xs-12 col-md-12">
 					<input type="file" name="csvfile">

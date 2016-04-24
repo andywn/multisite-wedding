@@ -18,16 +18,20 @@ keys in the wedding.conf and application.conf files.
 
 # Basic Setup
 There are two basic configuration files to configure before running this project.  The first is the wedding.conf file.  
+
 ### wedding.conf
 Auth Config
 * username and password - straight forward.
 * realm - The realm you're hosting the site on.  e.g. fredandjillsfantasticwedding.com.
+
 dbx
 * token - To setup dropbox backup, you'll need to configure a dropbox token.  Call the application what you want.  I strongly reccommend you only give the application permission to a single application folder.
 * rsvpFile - The default name of the backup file.  Will be backed up on every rsvp.
+
 mail
 * email - This is the email of the account used to send the email.  This has only been tested with gmail accounts.  Create a new account, with a new password.  You will need to setup the account to allow less secure apps to connect: https://support.google.com/accounts/answer/6010255?hl=en
 * to - A list of emails to email on receipt of a new rsvp.  Semi-colon separated.
+
 ### application.conf
 * db.default.password - Put in a secure password for your database.
 * play.crypto.secret - Make sure it's populated.  See <http://www.playframework.com/documentation/latest/> ApplicationSecret for more details.

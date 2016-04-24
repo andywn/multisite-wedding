@@ -148,12 +148,12 @@ public class Admin extends Controller {
 	    			Iterable<CSVRecord> records = CSVFormat.EXCEL.parse(file);
 	    			// Upload csv, in column order name, adult count, children count, first event (true or false), second event, email. 
 					List<Invitee> invites = new InviteListBuilder<CSVRecord>(records)
-							.setNameFunction((r) -> r.get(0))
-							.setAdultCount((r) -> Integer.parseInt(r.get(1)))
-							.setChildCount((r) -> Integer.parseInt(r.get(2)))
-							.setFirstEvent((r) -> Boolean.parseBoolean(r.get(3)))
-							.setSecondEvent((r) -> Boolean.parseBoolean(r.get(4)))
-							.setEmail((r) -> r.get(5))
+							.setNameFunction(r -> r.get(0))
+							.setAdultCount(r -> Integer.parseInt(r.get(1)))
+							.setChildCount(r -> Integer.parseInt(r.get(2)))
+							.setFirstEvent(r -> Boolean.parseBoolean(r.get(3)))
+							.setSecondEvent(r -> Boolean.parseBoolean(r.get(4)))
+							.setEmail(r -> (r.size() >= 6)?r.get(5):"") // email is optional
 							.setRsvpBy(Date.from(rsvpByDate.atStartOfDay()
 									.atZone(ZoneId.systemDefault()).toInstant()))
 							.setIrnGenerator(this::generateIrn)
