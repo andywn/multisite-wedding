@@ -6,6 +6,8 @@ import java.util.Set;
 
 import com.google.inject.Inject;
 
+import listeners.DropboxListener;
+import listeners.EmailListener;
 import listeners.RsvpListener;
 import models.Invitee;
 import models.Rsvp;
@@ -65,6 +67,9 @@ public class Invitation extends Controller {
     			return badRequest();
     		}
     		Logger.error("Save attempt failed on rsvp for invitee " + irn);
+    		for (String field: boundForm.errors().keySet()) {
+    			Logger.error(irn + " > " + field + " field contains errors (" + boundForm.errors().get(field).get(0).toString() + ")");
+    		}
     		flash("error", "Please correct the form below");
     		return ok(views.html.invite.invite.render(i, boundForm, false));
     	}
