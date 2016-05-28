@@ -55,9 +55,19 @@ $(document).ready(function(){
 					button.children(".glyphicon").removeClass("glyphicon-ban-circle");
 				}
 			})
-			.fail( /*...*/ );
+			.fail();
 	
 	});
+	
+	var clicked = ($("#rsvpEdinburghAccept").length && 
+							($("#rsvpEdinburghAccept").prop('checked') || $("#rsvpEdinburghReject").prop('checked'))) 
+					|| ($("#rsvpAustraliaAccept").length && 
+							($("#rsvpAustraliaAccept").prop('checked') || $("#rsvpAustraliaReject").prop('checked')));
+	
+	if (!clicked) {
+		$("#rsvp-submit-button").prop("disabled", true);
+	}
+	
 });
 
 

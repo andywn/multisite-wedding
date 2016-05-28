@@ -244,8 +244,12 @@
 						</label>
 					</div>
 					<script>
-						$('#rsvpEdinburghReject').click(function() { $('#rsvpEdinburghAccept').prop("checked", !$('#rsvpEdinburghReject').prop("checked"))});
-						$('#rsvpEdinburghAccept').click(function() { $('#rsvpEdinburghReject').prop("checked", !$('#rsvpEdinburghAccept').prop("checked"))});
+						$('#rsvpEdinburghReject').click(function() { $('#rsvpEdinburghAccept').prop("checked", !$('#rsvpEdinburghReject').prop("checked")); 
+									$("#rsvp-submit-button").prop("disabled", false);
+						});
+						$('#rsvpEdinburghAccept').click(function() { $('#rsvpEdinburghReject').prop("checked", !$('#rsvpEdinburghAccept').prop("checked"));
+									$("#rsvp-submit-button").prop("disabled", false);
+						});
 					</script>
 				}
 				@if(invite.australia) {
@@ -262,8 +266,12 @@
 					</label>
 					</div>
 					<script>
-						$('#rsvpAustraliaReject').click(function() { $('#rsvpAustraliaAccept').prop("checked", !$('#rsvpAustraliaReject').prop("checked"))});
-						$('#rsvpAustraliaAccept').click(function() { $('#rsvpAustraliaReject').prop("checked", !$('#rsvpAustraliaAccept').prop("checked"))});
+						$('#rsvpAustraliaReject').click(function() { $('#rsvpAustraliaAccept').prop("checked", !$('#rsvpAustraliaReject').prop("checked"));
+									$("#rsvp-submit-button").prop("disabled", false);
+						});
+						$('#rsvpAustraliaAccept').click(function() { $('#rsvpAustraliaReject').prop("checked", !$('#rsvpAustraliaAccept').prop("checked"));
+									$("#rsvp-submit-button").prop("disabled", false);
+						});
 					</script>
 				} 
 				
