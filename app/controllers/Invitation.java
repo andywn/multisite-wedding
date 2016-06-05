@@ -52,6 +52,9 @@ public class Invitation extends Controller {
     		Logger.error("Failed access to invitee " + irn);
     		return ok(views.html.error.invitemissing.render(irn));
     	}
+    	if (i.email != null) {
+    		i.email = i.email.trim();
+    	}
     	i.setLastViewed(new Date());
     	i.save();
     	return ok(views.html.invite.invite.render(i, rsvpForm.fill(i.getLatestRsvp()), success));

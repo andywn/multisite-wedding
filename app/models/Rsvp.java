@@ -203,11 +203,11 @@ public class Rsvp {
 	}
 
 	public String getEmail() {
-		return email.trim();
+		return email;
 	}
 
 	public void setEmail(String email) {
-		this.email = email.trim();
+		this.email = email;
 	}
 
 	public Date getSubmitted() {

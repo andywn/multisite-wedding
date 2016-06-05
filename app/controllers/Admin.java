@@ -74,6 +74,9 @@ public class Admin extends Controller {
 		if (invite.numberKidsInvited > 0) {
 			invite.kids = true;
 		}
+		if (invite.email != null) {
+			invite.email = invite.email.trim();
+		}
 		invite.save();
 		Logger.info("Adding Invite " + invite.irn);
 		return redirect(routes.Admin.main());
@@ -153,7 +156,7 @@ public class Admin extends Controller {
 							.setChildCount(r -> Integer.parseInt(r.get(2)))
 							.setFirstEvent(r -> Boolean.parseBoolean(r.get(3)))
 							.setSecondEvent(r -> Boolean.parseBoolean(r.get(4)))
-							.setEmail(r -> (r.size() >= 6)?r.get(5):"") // email is optional
+							.setEmail(r -> (r.size() >= 6)?r.get(5).trim():"") // email is optional
 							.setRsvpBy(Date.from(rsvpByDate.atStartOfDay()
 									.atZone(ZoneId.systemDefault()).toInstant()))
 							.setIrnGenerator(this::generateIrn)
